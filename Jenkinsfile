@@ -17,7 +17,7 @@ pipeline {
                 // Set the PATH and install dependencies using pip
                 bat '''
                 set PATH=%PYTHON_PATH%;%PATH%
-                pip install -r requirements.txt
+                pip install -r requirement.txt
                 '''
             }
         }
