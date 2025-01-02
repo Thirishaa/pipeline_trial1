@@ -20,14 +20,14 @@ pipeline {
                 // Set the PATH and install dependencies using pip
                 bat '''
                 set PATH=%PYTHON_PATH%;%PATH%
-                pip install -r requirements.txt
+                pip install -r requirement.txt
                 '''
             }
         }
  
         stage('SonarQube Analysis') {
             environment {
-                SONAR_TOKEN = credentials('Sonarqube-token') // Accessing the SonarQube token stored in Jenkins credentials
+                SONAR_TOKEN = credentials('sonar-token') // Accessing the SonarQube token stored in Jenkins credentials
             }
             steps {
                 // Ensure that sonar-scanner is in the PATH
