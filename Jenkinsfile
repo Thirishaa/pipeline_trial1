@@ -1,11 +1,12 @@
+
 pipeline {
     agent any
  
     environment {
-       PYTHON_PATH = 'C:\\Users\\thirishaa\\AppData\\Local\\Programs\\Python\\Python313;C:\\Users\\thirishaa\\AppData\\Local\\Programs\\Python\\Python313\\Scripts'
+        PYTHON_PATH = 'C:\\Users\\thirishaa\\AppData\\Local\\Programs\\Python\\Python313;C:\\Users\\thirishaa\\AppData\\Local\\Programs\\Python\\Python313\\Scripts'
        SONAR_SCANNER_PATH='C:\\Program Files\\sonar-scanner-6.2.1.4610-windows-x64\\bin'
 
-    }
+   }
  
     stages {
         stage('Checkout') {
@@ -19,22 +20,26 @@ pipeline {
                 // Set the PATH and install dependencies using pip
                 bat '''
                 set PATH=%PYTHON_PATH%;%PATH%
-                pip install -r requirement.txt
+                pip install -r requirements.txt
                 '''
             }
         }
  
         stage('SonarQube Analysis') {
             environment {
-                SONAR_TOKEN = credentials('sonarqube-token') // Accessing the SonarQube token stored in Jenkins credentials
+                SONAR_TOKEN = credentials('Sonarqube-token') // Accessing the SonarQube token stored in Jenkins credentials
             }
             steps {
+                // Ensure that sonar-scanner is in the PATH
                 bat '''
+                set PATH=%SONAR_SCANNER_PATH%;%PATH%
+                where sonar-scanner || echo "SonarQube scanner not found. Please install it."
                 set PATH=%PYTHON_PATH%;%PATH%
-                sonar-scanner -Dsonar.projectKey=pipeline_trial1 ^
+               sonar-scanner -Dsonar.projectKey=pipeline_trial1 ^
                   -Dsonar.sources=. ^
                   -Dsonar.host.url=http://localhost:9000 ^
                   -Dsonar.token=sqp_592cd6f9fa3bb339b08d5c2086d816c741c7f568
+
                 '''
             }
         }
