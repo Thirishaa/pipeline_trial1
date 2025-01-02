@@ -35,7 +35,7 @@ pipeline {
                 set PATH=%SONAR_SCANNER_PATH%;%PATH%
                 where sonar-scanner || echo "SonarQube scanner not found. Please install it."
                 set PATH=%PYTHON_PATH%;%PATH%
-               sonar-scanner -Dsonar.projectKey=pipeline_trial1 ^
+               sonar-scanner -Dsonar.projectKey=pipeline2 ^
                   -Dsonar.sources=. ^
                   -Dsonar.host.url=http://localhost:9000 ^
                   -Dsonar.token=%SONAR_TOKEN%
